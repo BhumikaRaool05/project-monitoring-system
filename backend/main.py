@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from database import SessionLocal, Project
@@ -6,6 +7,13 @@ from database import SessionLocal, Project
 
 app = FastAPI(title="Project Monitoring API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
